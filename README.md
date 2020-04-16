@@ -26,6 +26,7 @@ modelBuilder.Entity<User>().HasData(new User[]
                 new User{Id=3, FirstName="Sherlock ", LastName="Holmes", Age=18, Created=DateTime.Now, Modified=DateTime.Now}
             });
 ```
+I initialize all properties (even `Id`, `Created` and `Modified`) because this [article](https://docs.microsoft.com/en-us/ef/core/modeling/data-seeding) says so.
 
 And here is a migration:
 ```
