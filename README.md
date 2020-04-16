@@ -1,7 +1,12 @@
 ### Data Seeding bug
-#### The problem: cannot explicity initialize generated values while using data seeding.
+#### The problem: cannot explicity initialize values generated on add or update while using data seeding.
+
+#### Steps to reproduce:
+1. Create an entity with *generated values on add or update*
+2. Use data seeding and try to set generated values explicity
+
 #### Description:
-This project was created to demonstrate bug in data seeding when you using generated values. There is entity `User` with two generated properties: `Created` and `Modified`. When I'm using data seeding for inserting test data into table `Users` and **explicity** initialize both of generated values, property `Modified` isn't initialize in migration (unlike `Created`).
+This project was created to demonstrate bug in data seeding when you using generated values. There is entity `User` with two generated values: `Created` and `Modified`. When I'm trying to seed data into table `Users` and **explicity** initialize both of generated values, property `Modified` isn't initialize in migration (unlike `Created`).
 
 Generated properties attributes:
 ```
@@ -42,3 +47,15 @@ migrationBuilder.InsertData(
 ```
 
 As you can see, I specify `Modified` value, while using data seeding, but this property is not initialized in migration. 
+
+Of course, I'm getting exception, when trying to update the database:
+```
+Cannot insert the value NULL into column 'Modified', table 'SeedDataBug.dbo.Users'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+```
+#### Technical details:
+- EF Core version: 3.1.3
+- Database provider: Microsoft.EntityFrameworkCore.SqlServer
+- Target framework: .NET Core 3.1
+- Operating system: Windows 10
+- IDE: Visual Studio 2019 16.4
